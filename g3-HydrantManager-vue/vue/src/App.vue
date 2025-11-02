@@ -1,29 +1,35 @@
 <template>
   <div id="app">
-    <AppHeader />
-    <div class="main-container">
-      <Sidebar
-          :search-query="searchQuery"
-          :filter-status="filterStatus"
-          :filter-area="filterArea"
-          :filter-date="filterDate"
-          :selected-hydrant="selectedHydrant"
-          :hydrants="filteredHydrants"
-          :stats="stats"
-          @update:search-query="searchQuery = $event"
-          @update:filter-status="filterStatus = $event"
-          @update:filter-area="filterArea = $event"
-          @update:filter-date="filterDate = $event"
-          @hydrant-select="selectHydrant"
-          @search="handleSearch"
-      />
-      <MapContainer
-          :selected-hydrant="selectedHydrant"
-          :current-hydrant="currentHydrant"
-          @hydrant-select="selectHydrant"
-      />
+    <!-- 如果未登录，显示登录界面 -->
+    <Login v-if="!isLoggedIn" @login-success="handleLoginSuccess" />
+
+    <!-- 如果已登录，显示主界面 -->
+    <div v-else class="app-container">
+      <AppHeader :username="username" @logout="handleLogout" />
+      <div class="main-container">
+        <Sidebar
+            :search-query="searchQuery"
+            :filter-status="filterStatus"
+            :filter-area="filterArea"
+            :filter-date="filterDate"
+            :selected-hydrant="selectedHydrant"
+            :hydrants="filteredHydrants"
+            :stats="stats"
+            @update:search-query="searchQuery = $event"
+            @update:filter-status="filterStatus = $event"
+            @update:filter-area="filterArea = $event"
+            @update:filter-date="filterDate = $event"
+            @hydrant-select="selectHydrant"
+            @search="handleSearch"
+        />
+        <MapContainer
+            :selected-hydrant="selectedHydrant"
+            :current-hydrant="currentHydrant"
+            @hydrant-select="selectHydrant"
+        />
+      </div>
+      <AppFooter />
     </div>
-    <AppFooter />
   </div>
 </template>
 
@@ -35,17 +41,50 @@ import AppHeader from './components/Header.vue'
 import Sidebar from './components/Sidebar.vue'
 import MapContainer from './components/MapContainer.vue'
 import AppFooter from './components/Footer.vue'
+import Login from './components/Login.vue'
 
 export default {
   name: 'App',
   components: {
+    Login,
     AppHeader,
     Sidebar,
     MapContainer,
     AppFooter
   },
   setup() {
-    // 响应式数据
+    // 登录状态管理
+    const isLoggedIn = ref(false)
+    const username = ref('')
+
+    // 检查登录状态
+    const checkLoginStatus = () => {
+      const loggedIn = localStorage.getItem('isLoggedIn')
+      const savedUsername = localStorage.getItem('username')
+
+      if (loggedIn === 'true' && savedUsername) {
+        isLoggedIn.value = true
+        username.value = savedUsername
+      }
+    }
+
+    // 登录成功处理
+    const handleLoginSuccess = (userData) => {
+      isLoggedIn.value = true
+      username.value = userData.username
+      ElMessage.success(`欢迎回来，${userData.username}！`)
+    }
+
+    // 退出登录
+    const handleLogout = () => {
+      localStorage.removeItem('isLoggedIn')
+      localStorage.removeItem('username')
+      isLoggedIn.value = false
+      username.value = ''
+      ElMessage.success('已退出登录')
+    }
+
+    // 原有的业务逻辑数据
     const searchQuery = ref('')
     const filterStatus = ref('')
     const filterArea = ref('')
@@ -104,12 +143,25 @@ export default {
 
     // 生命周期
     onMounted(() => {
-      setTimeout(() => {
-        ElMessage.success('消防栓数据加载完成')
-      }, 500)
+      // 检查登录状态
+      checkLoginStatus()
+
+      // 只有登录后才加载数据提示
+      if (isLoggedIn.value) {
+        setTimeout(() => {
+          ElMessage.success('消防栓数据加载完成')
+        }, 500)
+      }
     })
 
     return {
+      // 登录相关
+      isLoggedIn,
+      username,
+      handleLoginSuccess,
+      handleLogout,
+
+      // 业务逻辑
       searchQuery,
       filterStatus,
       filterArea,
@@ -143,6 +195,12 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .main-container {

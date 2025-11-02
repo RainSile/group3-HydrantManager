@@ -2,19 +2,51 @@
   <header class="app-header">
     <div class="header-content">
       <div class="logo">
-        <el-icon class="logo-icon"><FireExtinguisher /></el-icon>
+        <!-- 使用文本图标替代 Element Plus 图标 -->
+        <span class="logo-icon">🔥</span>
         <span>消防栓查询系统</span>
       </div>
-      <div>
-        <el-button type="primary" link style="color: white;">管理员登录</el-button>
+      <div class="user-info" v-if="username">
+        <span class="user-name">👤 {{ username }}</span>
+        <el-dropdown @command="handleCommand">
+          <span class="user-dropdown">
+            ⚙️
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="profile">个人资料</el-dropdown-item>
+              <el-dropdown-item command="settings">系统设置</el-dropdown-item>
+              <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
   </header>
 </template>
 
-<script>
-export default {
-  name: 'AppHeader'
+<script setup>
+import { ElMessage } from 'element-plus'
+
+// 接收props
+const props = defineProps({
+  username: {
+    type: String,
+    default: ''
+  }
+})
+
+// 定义emit事件
+const emit = defineEmits(['logout'])
+
+const handleCommand = (command) => {
+  if (command === 'logout') {
+    emit('logout')
+  } else if (command === 'profile') {
+    ElMessage.info('个人资料功能开发中...')
+  } else if (command === 'settings') {
+    ElMessage.info('系统设置功能开发中...')
+  }
 }
 </script>
 
@@ -45,5 +77,32 @@ export default {
 
 .logo-icon {
   font-size: 24px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-name {
+  font-size: 14px;
+}
+
+.user-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+.user-dropdown:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 </style>
