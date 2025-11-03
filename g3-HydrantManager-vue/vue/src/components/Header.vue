@@ -2,7 +2,6 @@
   <header class="app-header">
     <div class="header-content">
       <div class="logo">
-        <!-- 使用文本图标替代 Element Plus 图标 -->
         <span class="logo-icon">🔥</span>
         <span>消防栓查询系统</span>
       </div>
@@ -26,9 +25,9 @@
 </template>
 
 <script setup>
+import { defineProps, defineEmits } from 'vue'
 import { ElMessage } from 'element-plus'
 
-// 接收props
 const props = defineProps({
   username: {
     type: String,
@@ -36,7 +35,6 @@ const props = defineProps({
   }
 })
 
-// 定义emit事件
 const emit = defineEmits(['logout'])
 
 const handleCommand = (command) => {

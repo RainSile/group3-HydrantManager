@@ -4,10 +4,8 @@
   </footer>
 </template>
 
-<script>
-export default {
-  name: 'AppFooter'
-}
+<script setup>
+// 无状态组件，不需要任何逻辑
 </script>
 
 <style scoped>

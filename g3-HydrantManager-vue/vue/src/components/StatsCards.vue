@@ -18,13 +18,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'StatsCards',
-  props: {
-    stats: Object
-  }
-}
+<script setup>
+import { defineProps } from 'vue'
+
+// 定义 props
+const props = defineProps({
+  stats: Object
+})
 </script>
 
 <style scoped>

@@ -4,8 +4,8 @@
         v-for="hydrant in hydrants"
         :key="hydrant.id"
         class="hydrant-item"
-        :class="{ active: $parent.selectedHydrant === hydrant.id }"
-        @click="$emit('hydrant-select', hydrant.id)"
+        :class="{ active: selectedHydrant === hydrant.id }"
+        @click="emit('hydrant-select', hydrant.id)"
     >
       <div class="hydrant-id">消防栓 #{{ hydrant.id }}</div>
       <div class="hydrant-address">{{ hydrant.address }}</div>
@@ -16,23 +16,28 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HydrantList',
-  props: {
-    hydrants: Array
-  },
-  emits: ['hydrant-select'],
-  methods: {
-    getStatusText(status) {
-      const statusMap = {
-        normal: '正常',
-        warning: '维护中',
-        error: '故障'
-      }
-      return statusMap[status] || '未知'
-    }
+<script setup>
+import { defineProps, defineEmits, inject } from 'vue'
+
+// 定义 props
+const props = defineProps({
+  hydrants: Array
+})
+
+// 定义 emits
+const emit = defineEmits(['hydrant-select'])
+
+// 从父组件获取选中的消防栓ID（替代 $parent）
+const selectedHydrant = inject('selectedHydrant')
+
+// 方法
+const getStatusText = (status) => {
+  const statusMap = {
+    normal: '正常',
+    warning: '维护中',
+    error: '故障'
   }
+  return statusMap[status] || '未知'
 }
 </script>
 

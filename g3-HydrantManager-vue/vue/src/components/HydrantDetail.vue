@@ -1,5 +1,19 @@
 <template>
-  <el-card class="hydrant-detail-card" header="消防栓详情">
+  <el-card class="hydrant-detail-card">
+    <template #header>
+      <div class="card-header">
+        <span>消防栓详情</span>
+        <el-button
+            type="danger"
+            :icon="Close"
+            circle
+            size="small"
+            @click="handleClose"
+            class="close-btn"
+        />
+      </div>
+    </template>
+
     <div v-if="hydrant">
       <p><strong>编号：</strong>#{{ hydrant.id }}</p>
       <p><strong>地址：</strong>{{ hydrant.address }}</p>
@@ -22,22 +36,27 @@
   </el-card>
 </template>
 
-<script>
-export default {
-  name: 'HydrantDetail',
-  props: {
-    hydrant: Object
-  },
-  methods: {
-    getStatusText(status) {
-      const statusMap = {
-        normal: '正常',
-        warning: '维护中',
-        error: '故障'
-      }
-      return statusMap[status] || '未知'
-    }
+<script setup>
+import { defineProps, defineEmits } from 'vue'
+import { Close } from '@element-plus/icons-vue'
+
+const props = defineProps({
+  hydrant: Object
+})
+
+const emit = defineEmits(['close', 'hydrant-select'])
+
+const handleClose = () => {
+  emit('close')
+}
+
+const getStatusText = (status) => {
+  const statusMap = {
+    normal: '正常',
+    warning: '维护中',
+    error: '故障'
   }
+  return statusMap[status] || '未知'
 }
 </script>
 
@@ -47,5 +66,23 @@ export default {
   top: 20px;
   right: 20px;
   width: 300px;
+  z-index: 1000;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  padding: 4px;
+  min-width: 24px;
+  height: 24px;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
 }
 </style>

@@ -8,7 +8,7 @@
       <el-form-item label="状态">
         <el-select
             :model-value="filterStatus"
-            @update:model-value="$emit('update:filter-status', $event)"
+            @update:model-value="emit('update:filter-status', $event)"
             placeholder="全部状态"
             clearable
         >
@@ -20,7 +20,7 @@
       <el-form-item label="区域">
         <el-select
             :model-value="filterArea"
-            @update:model-value="$emit('update:filter-area', $event)"
+            @update:model-value="emit('update:filter-area', $event)"
             placeholder="全部区域"
             clearable
         >
@@ -35,7 +35,7 @@
       <el-form-item label="最近检查">
         <el-date-picker
             :model-value="filterDate"
-            @update:model-value="$emit('update:filter-date', $event)"
+            @update:model-value="emit('update:filter-date', $event)"
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
@@ -47,23 +47,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { defineProps, defineEmits } from 'vue'
+import { Filter } from '@element-plus/icons-vue'
 import { areaOptions } from '../data/hydrants.js'
 
-export default {
-  name: 'FilterCard',
-  props: {
-    filterStatus: String,
-    filterArea: String,
-    filterDate: [String, Array]
-  },
-  emits: ['update:filter-status', 'update:filter-area', 'update:filter-date'],
-  data() {
-    return {
-      areaOptions
-    }
-  }
-}
+// 定义 props
+const props = defineProps({
+  filterStatus: String,
+  filterArea: String,
+  filterDate: [String, Array]
+})
+
+// 定义 emits
+const emit = defineEmits(['update:filter-status', 'update:filter-area', 'update:filter-date'])
 </script>
 
 <style scoped>
