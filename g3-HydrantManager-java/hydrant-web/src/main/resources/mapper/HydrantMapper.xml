@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="g3.hydrantmana.hydrantweb.mapper.HydrantMapper">
+    <select id="selectHydrant"
+            resultType="g3.hydrantmana.domain.dto.HydrantDTO">
+        SELECT
+        id,
+        location,
+        longitude,
+        latitude,
+        status,
+        pressure,
+        flow_rate     AS flowRate,
+        create_time   AS createTime,
+        update_time   AS updateTime,
+        data
+        FROM hydrant_table
+        <where>
+            <!-- 模糊匹配消防栓位置 -->
+            <if test="query.location != null and query.location != ''">
+                AND location LIKE CONCAT('%', #{query.location}, '%')
+            </if>
+            <!-- 状态筛选 -->
+            <if test="query.status != null">
+                AND status = #{query.status}
+            </if>
+            <!-- 最小水压 -->
+            <if test="query.minPressure != null">
+                AND pressure <![CDATA[>=]]> #{query.minPressure}
+            </if>
+            <!-- 最大水压 -->
+            <if test="query.maxPressure != null">
+                AND pressure <![CDATA[<=]]> #{query.maxPressure}
+            </if>
+            <!-- 最小流速 -->
+            <if test="query.minFlowRate != null">
+                AND flow_rate <![CDATA[>=]]> #{query.minFlowRate}
+            </if>
+            <!-- 最大流速 -->
+            <if test="query.maxFlowRate != null">
+                AND flow_rate <![CDATA[<=]]> #{query.maxFlowRate}
+            </if>
+            <!-- 更新时间范围 -->
+            <if test="query.startTime != null">
+                AND update_time <![CDATA[>=]]> #{query.startTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="query.endTime != null">
+                AND update_time <![CDATA[<=]]> #{query.endTime, jdbcType=TIMESTAMP}
+            </if>
+        </where>
+        <!-- 默认按更新时间降序 -->
+        ORDER BY update_time DESC
+    </select>
+
+    <update id="updateHydrant">
+        UPDATE hydrant_table
+        <set>
+            <if test="dto.location != null and dto.location != ''">
+                location = #{dto.location},
+            </if>
+            <if test="dto.longitude != null">
+                longitude = #{dto.longitude},
+            </if>
+            <if test="dto.latitude != null">
+                latitude = #{dto.latitude},
+            </if>
+            <if test="dto.status != null">
+                status = #{dto.status},
+            </if>
+            <if test="dto.pressure != null">
+                pressure = #{dto.pressure},
+            </if>
+            <if test="dto.flowRate != null">
+                flow_rate = #{dto.flowRate},
+            </if>
+            <if test="dto.data != null and dto.data != ''">
+                data = #{dto.data},
+            </if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{dto.id}
+    </update>
+
+</mapper>

@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: hydrant-web
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hydrant_db?serverTimezone=Asia/Shanghai
+    username: kukuru
+    password: 31463146
+    type: com.alibaba.druid.pool.DruidDataSource
+server:
+  port: 11000
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+hydrant:
+  jwt:
+    secret-key: Group3-HydrantManagerCourseProject-SecretKey
+    ttl: 7200000
+    token-name: token
