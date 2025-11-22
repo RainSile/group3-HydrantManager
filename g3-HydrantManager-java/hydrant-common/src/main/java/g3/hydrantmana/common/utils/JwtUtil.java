@@ -1,4 +1,4 @@
-package g3.hydrantmana.utils;
+package g3.hydrantmana.common.utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

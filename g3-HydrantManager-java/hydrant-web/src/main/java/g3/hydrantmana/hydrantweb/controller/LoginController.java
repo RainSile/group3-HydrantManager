@@ -1,16 +1,17 @@
 package g3.hydrantmana.hydrantweb.controller;
 
-import g3.hydrantmana.context.BaseContext;
+import g3.hydrantmana.common.context.BaseContext;
 import g3.hydrantmana.domain.dto.LoginDTO;
 import g3.hydrantmana.domain.entity.User;
 import g3.hydrantmana.domain.vo.JsonVO;
 import g3.hydrantmana.domain.vo.LoginVO;
 import g3.hydrantmana.hydrantweb.service.LoginService;
-import g3.hydrantmana.properties.JwtProperties;
-import g3.hydrantmana.utils.JwtUtil;
+import g3.hydrantmana.common.properties.JwtProperties;
+import g3.hydrantmana.common.utils.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @Tag(name = "登录登出")
 @RestController
+@Slf4j
 public class LoginController {
     @Resource
     LoginService loginService;
@@ -47,6 +49,6 @@ public class LoginController {
     @PostMapping("/logout")
     public JsonVO logout(){
         BaseContext.removeCurrentId();
-        return JsonVO.success("登出成功!");
+        return JsonVO.success("登出成功");
     }
 }

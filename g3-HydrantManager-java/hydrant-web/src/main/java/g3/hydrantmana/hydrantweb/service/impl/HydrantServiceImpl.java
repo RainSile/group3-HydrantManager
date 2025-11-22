@@ -1,6 +1,9 @@
 package g3.hydrantmana.hydrantweb.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import g3.hydrantmana.common.constants.DatabaseConstants;
+import g3.hydrantmana.common.exceptions.OperationFailedException;
+import g3.hydrantmana.common.exceptions.RecordNotFoundException;
 import g3.hydrantmana.domain.dto.HydrantDTO;
 import g3.hydrantmana.domain.dto.PageDTO;
 import g3.hydrantmana.domain.entity.Hydrant;
@@ -11,8 +14,6 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -51,12 +52,8 @@ public class HydrantServiceImpl implements HydrantService {
     @Override
     public void removeHydrant(String id) {
         int affectedRows = hydrantMapper.deleteById(id);
-        if (affectedRows == 0){
-            try {
-                throw new Exception("数据不存在");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+        if (affectedRows == DatabaseConstants.AffectedRows.ZERO){
+            throw new RecordNotFoundException("数据未找到,可能不存在该条数据");
         }
     }
 
@@ -67,12 +64,8 @@ public class HydrantServiceImpl implements HydrantService {
     @Override
     public void changeHydrant(HydrantDTO hydrantDTO) {
         int affectedRows = hydrantMapper.updateHydrant(hydrantDTO);
-        if (affectedRows == 0){
-            try{
-                throw new Exception("没有受影响行数");
-            }catch (Exception e){
-                throw new RuntimeException(e);
-            }
+        if (affectedRows == DatabaseConstants.AffectedRows.ZERO){
+            throw new RecordNotFoundException("数据未找到,可能不存在该条数据");
         }
     }
 }

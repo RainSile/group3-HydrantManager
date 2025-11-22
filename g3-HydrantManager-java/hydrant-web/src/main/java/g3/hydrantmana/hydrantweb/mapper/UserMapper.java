@@ -27,7 +27,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param status
      * @return
      */
-    @Update("UPDATE user_table SET status = #{status} WHERE id = #{id}")
+    @Update("UPDATE user_table SET status = #{status},update_time=Now() WHERE id = #{id}")
     int updateStatus(@Param("status") Integer status,@Param("id") String id);
 
     /**
@@ -36,7 +36,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param pwd
      * @return
      */
-    @Update("UPDATE user_table SET password = #{pwd} WHERE id = #{id}")
+    @Update("UPDATE user_table SET password = #{pwd},update_time=Now() WHERE id = #{id}")
     int updatePassword(@Param("pwd") String pwd,@Param("id") String id);
 
 }

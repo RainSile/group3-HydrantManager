@@ -21,8 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class HydrantDTO implements Serializable {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Schema(description = "主键id",example = "1988966178818719745",accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(description = "主键id",example = "1988966178818719745")
     private String id;
 
     @Schema(description = "详细位置描述", example = "中山市石岐街道莲塘路口东侧消防栓")

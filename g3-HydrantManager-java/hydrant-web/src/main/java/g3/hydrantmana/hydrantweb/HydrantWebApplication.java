@@ -1,6 +1,6 @@
 package g3.hydrantmana.hydrantweb;
 
-import g3.hydrantmana.properties.JwtProperties;
+import g3.hydrantmana.common.properties.JwtProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

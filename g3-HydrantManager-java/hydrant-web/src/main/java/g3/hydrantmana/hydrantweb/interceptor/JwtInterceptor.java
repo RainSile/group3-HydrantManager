@@ -1,7 +1,7 @@
 package g3.hydrantmana.hydrantweb.interceptor;
 
-import g3.hydrantmana.context.BaseContext;
-import g3.hydrantmana.utils.JwtUtil;
+import g3.hydrantmana.common.context.BaseContext;
+import g3.hydrantmana.common.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import g3.hydrantmana.properties.JwtProperties;
+import g3.hydrantmana.common.properties.JwtProperties;
 
 /**
  * jwt令牌校验的拦截器
@@ -50,7 +50,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             Claims claims = JwtUtil.parseJWT(jwtProperties.getSecretKey(), token, uri);
             String role = claims.get("role", String.class);
 
-            // 将userid放入thradlocal中以便于后续service调用
+            // 将userid放入threadlocal中以便于后续service调用
             String userid = claims.get("userid", String.class);
             long id = Long.parseLong(userid);
             BaseContext.setCurrentId(id);

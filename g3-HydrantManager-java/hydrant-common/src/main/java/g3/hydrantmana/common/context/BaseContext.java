@@ -1,4 +1,4 @@
-package g3.hydrantmana.context;
+package g3.hydrantmana.common.context;
 
 public class BaseContext {
 

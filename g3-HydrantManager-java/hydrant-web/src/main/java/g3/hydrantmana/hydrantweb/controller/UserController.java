@@ -9,11 +9,13 @@ import g3.hydrantmana.hydrantweb.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "用户管理")
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
     @Resource
@@ -37,13 +39,13 @@ public class UserController {
     @PutMapping("/status/{stat}")
     public JsonVO statusUser(@PathVariable Integer stat,String id){
         userService.changeStatus(stat,id);
-        return JsonVO.success("账号状态修改成功!");
+        return JsonVO.success("账号状态修改成功");
     }
 
     @Operation(tags = "用户管理",summary = "修改密码")
     @PutMapping("/password")
     public JsonVO statusUser(String pwd){
         userService.changePassword(pwd);
-        return JsonVO.success("密码修改成功!");
+        return JsonVO.success("密码修改成功");
     }
 }

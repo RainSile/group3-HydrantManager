@@ -36,4 +36,5 @@
             <version>${jjwt.version}</version>
         </dependency>
     </dependencies>
+
 </project>

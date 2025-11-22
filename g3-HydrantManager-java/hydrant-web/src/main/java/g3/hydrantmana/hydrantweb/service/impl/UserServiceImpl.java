@@ -1,7 +1,10 @@
 package g3.hydrantmana.hydrantweb.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import g3.hydrantmana.context.BaseContext;
+import g3.hydrantmana.common.constants.DatabaseConstants;
+import g3.hydrantmana.common.context.BaseContext;
+import g3.hydrantmana.common.exceptions.OperationFailedException;
+import g3.hydrantmana.common.exceptions.RecordNotFoundException;
 import g3.hydrantmana.domain.dto.PageDTO;
 import g3.hydrantmana.domain.dto.UserDTO;
 import g3.hydrantmana.domain.entity.User;
@@ -59,32 +62,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeStatus(Integer stat, String id) {
         int affectedRows = userMapper.updateStatus(stat, id);
-        if (affectedRows == 0){
-            try {
-                throw new Exception("没有内容被更新,数据不存在!");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+        if (affectedRows == DatabaseConstants.AffectedRows.ZERO){
+            throw new RecordNotFoundException("数据未找到,可能不存在该条数据");
         }
     }
 
     /**
      * 修改密码
      * @param pwd
-     * @param id
      */
     @Override
     public void changePassword(String pwd) {
         String md5pwd = DigestUtils.md5DigestAsHex(pwd.getBytes());
         Long id = BaseContext.getCurrentId();
         String userid = String.valueOf(id);
-        int affectedRows = userMapper.updatePassword(md5pwd, userid);
-        if (affectedRows == 0){
-            try {
-                throw new Exception("没有内容被更新,数据不存在!");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+        userMapper.updatePassword(md5pwd, userid);
     }
 }
