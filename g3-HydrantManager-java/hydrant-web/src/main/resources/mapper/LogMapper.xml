@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="g3.hydrantmana.hydrantweb.mapper.LogMapper">
+    <!-- 分页查询日志记录 -->
+    <select id="selectLog" resultType="g3.hydrantmana.domain.vo.LogVO">
+        SELECT
+        id,
+        mid,
+        record,
+        update_time
+        FROM maintenance_log
+        <where>
+            <!-- 维修映射表id筛选 -->
+            <if test="query.mid != null and query.mid != ''">
+                AND mid = #{query.mid}
+            </if>
+            <!-- 创建时间范围筛选 -->
+            <if test="query.startTime != null">
+                AND update_time <![CDATA[>=]]> #{query.startTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="query.endTime != null">
+                AND update_time <![CDATA[<=]]> #{query.endTime, jdbcType=TIMESTAMP}
+            </if>
+        </where>
+        <!-- 默认按创建时间降序排序 -->
+        ORDER BY update_time DESC
+    </select>
+
+</mapper>

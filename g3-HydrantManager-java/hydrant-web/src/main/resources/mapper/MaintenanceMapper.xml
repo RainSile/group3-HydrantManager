@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="g3.hydrantmana.hydrantweb.mapper.MaintenanceMapper">
+
+    <!-- 分页查询维护记录 -->
+    <select id="selectMaintenance" resultType="g3.hydrantmana.domain.dto.MaintenanceDTO">
+        SELECT
+        id,
+        uid,
+        hid
+        FROM maintenance_mapping
+        <where>
+            <!-- 逻辑删除过滤：只查询未删除的记录 -->
+            deleted = 0
+            <!-- 维修责任人ID筛选 -->
+            <if test="query.uid != null and query.uid != ''">
+                AND uid = #{query.uid}
+            </if>
+            <!-- 消防栓ID筛选 -->
+            <if test="query.hid != null and query.hid != ''">
+                AND hid = #{query.hid}
+            </if>
+        </where>
+        <!-- 默认按创建时间降序排序 -->
+        ORDER BY update_time DESC
+    </select>
+
+</mapper>

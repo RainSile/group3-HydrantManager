@@ -33,6 +33,7 @@
         <knife4j.version>4.4.0</knife4j.version>
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <jjwt.version>0.11.5</jjwt.version>
+        <redis-spring-boot.version>3.3.5</redis-spring-boot.version>
     </properties>
 
     <!-- 子模块声明 -->
@@ -119,6 +120,13 @@
                 <artifactId>jjwt-jackson</artifactId>
                 <version>${jjwt.version}</version>
                 <scope>runtime</scope>
+            </dependency>
+
+            <!-- redis启动器-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${redis-spring-boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
