@@ -15,7 +15,7 @@
     <!-- 当前父工程的坐标 -->
     <groupId>g3</groupId>
     <artifactId>hydrantmana</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>g3-HydrantManager-java</name>
     <description>Hydrant Manager parent project</description>

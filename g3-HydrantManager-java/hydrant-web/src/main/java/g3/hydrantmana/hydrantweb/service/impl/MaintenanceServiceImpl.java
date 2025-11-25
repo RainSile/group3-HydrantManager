@@ -6,10 +6,7 @@ import g3.hydrantmana.common.constants.HydrantStatusConstants;
 import g3.hydrantmana.common.constants.SystemConstants;
 import g3.hydrantmana.common.exceptions.FiledException;
 import g3.hydrantmana.common.exceptions.RecordNotFoundException;
-import g3.hydrantmana.domain.dto.HydrantDTO;
-import g3.hydrantmana.domain.dto.LogDTO;
-import g3.hydrantmana.domain.dto.MaintenanceDTO;
-import g3.hydrantmana.domain.dto.PageDTO;
+import g3.hydrantmana.domain.dto.*;
 import g3.hydrantmana.domain.entity.Hydrant;
 import g3.hydrantmana.domain.entity.Log;
 import g3.hydrantmana.domain.entity.Maintenance;
@@ -17,6 +14,7 @@ import g3.hydrantmana.domain.query.LogQuery;
 import g3.hydrantmana.domain.query.MaintenanceQuery;
 import g3.hydrantmana.hydrantweb.mapper.HydrantMapper;
 import g3.hydrantmana.hydrantweb.mapper.MaintenanceMapper;
+import g3.hydrantmana.hydrantweb.service.GeoInfoService;
 import g3.hydrantmana.hydrantweb.service.HydrantService;
 import g3.hydrantmana.hydrantweb.service.MaintenanceService;
 import jakarta.annotation.Resource;
@@ -45,6 +43,8 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     private HydrantService hydrantService;
     @Resource
     private HydrantMapper hydrantMapper;
+    @Resource
+    private GeoInfoService geoInfoService;
 
     @Override
     public PageDTO<MaintenanceDTO> listMaintenance(MaintenanceQuery query) {
@@ -56,6 +56,8 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     @Override
     public void addMaintenance(MaintenanceDTO maintenanceDTO) {
+        geoInfoService.removeGeoInfo(maintenanceDTO.getHid());
+
         if (maintenanceDTO.getUid() == null || maintenanceDTO.getHid() == null) {
             throw new FiledException("无法建立映射关系: 字段不完整,uid,hid必须同时存在");
         }
@@ -78,8 +80,10 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     @Override
     public void removeMaintenance(String id) {
-            log.info("完成维护记录，ID：{}", id);
+        log.info("完成维护记录，ID：{}", id);
+
         Maintenance maintenance = maintenanceMapper.selectById(id);
+
         if (maintenance == null){
             throw new RecordNotFoundException("该条数据不存在");
         }
@@ -96,6 +100,10 @@ public class MaintenanceServiceImpl implements MaintenanceService {
             hydrantDTO.setStatus(HydrantStatusConstants.NORMAL);
             hydrantService.changeHydrant(hydrantDTO);
         }
-
+        GeoDTO geoDTO = new GeoDTO();
+        geoDTO.setHid(hid);
+        geoDTO.setLongitude(hydrant.getLongitude());
+        geoDTO.setLatitude(hydrant.getLatitude());
+        geoInfoService.addGeoInfo(geoDTO);
     }
 }
