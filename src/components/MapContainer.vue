@@ -37,9 +37,11 @@ const mapLoaded = ref(false)
 const loading = ref(false)
 const map = ref(null)
 const markers = ref([])
+const userLocationMarker = ref(null) // 用户位置标记
 
 const MAP_CENTER = { lng: 113.396845, lat: 22.533457 }
 
+// 加载地图
 const openMap = async () => {
   if (!BAIDU_MAP_AK) {
     ElMessage.error('请配置百度地图 API Key')
@@ -59,6 +61,7 @@ const openMap = async () => {
   }
 }
 
+// 加载百度地图脚本
 const loadBMapScript = () => {
   return new Promise((resolve, reject) => {
     if (window.BMap) {
@@ -88,6 +91,7 @@ const loadBMapScript = () => {
   })
 }
 
+// 创建地图实例
 const createMap = () => {
   map.value = new BMap.Map('bmap-container')
   const point = new BMap.Point(MAP_CENTER.lng, MAP_CENTER.lat)
@@ -99,6 +103,7 @@ const createMap = () => {
   mapLoaded.value = true
 }
 
+// 添加消防栓标记
 const addHydrantMarkers = () => {
   clearMarkers()
 
@@ -118,6 +123,7 @@ const addHydrantMarkers = () => {
   })
 }
 
+// 创建消防栓图标
 const createHydrantIcon = (status) => {
   const colors = {
     '0': '#52c41a',
@@ -138,6 +144,22 @@ const createHydrantIcon = (status) => {
   return icon
 }
 
+// 创建用户位置图标
+const createUserLocationIcon = () => {
+  const svg = `
+    <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="15" fill="#1890ff" fill-opacity="0.3" stroke="#1890ff" stroke-width="2"/>
+      <circle cx="20" cy="20" r="5" fill="#1890ff" stroke="#fff" stroke-width="2"/>
+    </svg>
+  `
+  return new BMap.Icon(
+      'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg))),
+      new BMap.Size(40, 40),
+      { anchor: new BMap.Size(20, 20) }
+  )
+}
+
+// 创建SVG图标
 const createSvgIcon = (color) => {
   const svg = `
     <svg width="30" height="40" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
@@ -149,6 +171,7 @@ const createSvgIcon = (color) => {
   return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)))
 }
 
+// 清除所有标记
 const clearMarkers = () => {
   markers.value.forEach(marker => {
     map.value?.removeOverlay(marker)
@@ -156,6 +179,47 @@ const clearMarkers = () => {
   markers.value = []
 }
 
+// 清除用户位置标记
+const clearUserLocationMarker = () => {
+  if (userLocationMarker.value) {
+    map.value?.removeOverlay(userLocationMarker.value)
+    userLocationMarker.value = null
+  }
+}
+
+// 跳转到指定位置
+const gotoLocation = (lng, lat, addMarker = false) => {
+  if (!map.value) return
+
+  const point = new BMap.Point(lng, lat)
+  map.value.panTo(point)
+  map.value.setZoom(17) // 设置合适的缩放级别
+
+  // 添加用户位置标记
+  if (addMarker) {
+    clearUserLocationMarker()
+    const icon = createUserLocationIcon()
+    const marker = new BMap.Marker(point, { icon: icon })
+    map.value.addOverlay(marker)
+    userLocationMarker.value = marker
+  }
+}
+
+// 刷新标记
+const refreshMarkers = () => {
+  if (map.value && mapLoaded.value) {
+    addHydrantMarkers()
+  }
+}
+
+// 暴露方法给父组件
+defineExpose({
+  refreshMarkers,
+  gotoLocation,
+  clearUserLocationMarker
+})
+
+// 监听消防栓数据变化
 watch(() => props.hydrants, (newHydrants) => {
   if (mapLoaded.value && newHydrants) {
     nextTick(() => {
@@ -164,16 +228,7 @@ watch(() => props.hydrants, (newHydrants) => {
   }
 }, { deep: true, immediate: true })
 
-const refreshMarkers = () => {
-  if (map.value && mapLoaded.value) {
-    addHydrantMarkers()
-  }
-}
-
-defineExpose({
-  refreshMarkers
-})
-
+// 监听选中的消防栓
 watch(() => props.selectedHydrant, (newVal) => {
   if (newVal && map.value) {
     const hydrant = props.hydrants.find(h => h.id === newVal)

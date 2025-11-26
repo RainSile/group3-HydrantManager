@@ -29,16 +29,16 @@ defineProps({
 .stats-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 8px;
 }
 
 .stat-card {
   background: white;
-  padding: 16px;
-  border-radius: 8px;
+  padding: 12px 8px;
+  border-radius: 6px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border-left: 4px solid #1890ff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  border-left: 3px solid #1890ff;
 }
 
 .stat-card.normal {
@@ -54,14 +54,14 @@ defineProps({
 }
 
 .stat-value {
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
   color: #333;
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 11px;
   color: #666;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 </style>

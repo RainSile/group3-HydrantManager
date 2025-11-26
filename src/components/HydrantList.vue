@@ -32,8 +32,8 @@ const getStatusText = (status) => {
 
 <style scoped>
 .hydrant-list {
-  margin-top: 20px;
-  max-height: 400px;
+  margin-top: 10px;
+  max-height: 420px;
   overflow-y: auto;
 }
 

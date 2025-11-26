@@ -70,11 +70,21 @@ export const logApi = {
     listLog: (params) => request.get('/log/query', { params })
 }
 
+// 地理信息接口
+export const geoApi = {
+    // 获取最近消防栓
+    getNearestHydrant: (params) => request.get('/geo/min-distance', { params }),
+
+    // 获取半径内消防栓
+    getHydrantsInRadius: (params) => request.get('/geo/find-hydrant', { params })
+}
+
 export default {
     login,
     logout,
     userApi,
     hydrantApi,
     maintenanceApi,
+    geoApi,
     logApi
 }

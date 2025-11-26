@@ -78,31 +78,35 @@ const handleAddSuccess = () => {
   width: 350px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   background: white;
-  padding: 16px;
+  padding: 12px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  height: calc(100vh - 120px);
+  overflow-y: auto;
 }
 
 .add-section {
   display: flex;
   justify-content: center;
+  margin-top: auto;
 }
 
 .add-button {
   width: 100%;
-  height: 40px;
+  height: 36px;
   font-size: 14px;
 }
 
 :deep(.add-button .el-icon) {
-  margin-right: 8px;
+  margin-right: 6px;
 }
 
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
+    height: auto;
   }
 }
 </style>

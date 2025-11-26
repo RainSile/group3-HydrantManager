@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, nextTick } from 'vue'
+import { ref, onMounted, computed, nextTick, provide } from 'vue'
 import { ElMessage } from 'element-plus'
 import { hydrantApi } from '@/api/hydrantApi.js'
 import Sidebar from './Sidebar.vue'
@@ -44,18 +44,25 @@ const selectedHydrant = ref('')
 const hydrants = ref([])
 const mapContainerRef = ref()
 
+// 提供地图容器引用给子组件
+provide('mapContainerRef', mapContainerRef)
+
+// 计算选中的消防栓详情
 const selectedHydrantDetail = computed(() => {
   return hydrants.value.find(h => h.id === selectedHydrant.value) || null
 })
 
+// 处理消防栓选择
 const handleHydrantSelect = (hydrantId) => {
   selectedHydrant.value = hydrantId
 }
 
+// 关闭详情卡片
 const handleCloseDetail = () => {
   selectedHydrant.value = ''
 }
 
+// 处理删除成功
 const handleDeleteSuccess = (deletedHydrantId) => {
   if (selectedHydrant.value === deletedHydrantId) {
     selectedHydrant.value = ''
@@ -64,10 +71,7 @@ const handleDeleteSuccess = (deletedHydrantId) => {
   ElMessage.success('消防栓已删除')
 }
 
-const refreshData = () => {
-  loadHydrants()
-}
-
+// 加载消防栓数据
 const loadHydrants = async () => {
   try {
     const response = await hydrantApi.listHydrants({
@@ -88,6 +92,7 @@ const loadHydrants = async () => {
         data: item.data
       }))
 
+      // 刷新地图标记
       nextTick(() => {
         if (mapContainerRef.value && mapContainerRef.value.refreshMarkers) {
           mapContainerRef.value.refreshMarkers()
@@ -102,10 +107,12 @@ const loadHydrants = async () => {
   }
 }
 
+// 组件挂载时加载数据
 onMounted(() => {
   loadHydrants()
 })
 
+// 暴露方法给父组件
 defineExpose({
   loadHydrants
 })
@@ -142,6 +149,7 @@ defineExpose({
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* 响应式设计 */
 @media (max-width: 768px) {
   .main-content {
     flex-direction: column;
