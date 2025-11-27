@@ -128,7 +128,7 @@ defineExpose({
   gap: 20px;
   padding: 20px;
   background: #f5f5f5;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 100px);
 }
 
 .content-area {

@@ -13,7 +13,7 @@
   background-color: #f0f2f5;
   text-align: center;
   padding: 15px;
-  margin-top: 20px;
+  margin-top: 10px;
   color: #666;
   font-size: 14px;
 }

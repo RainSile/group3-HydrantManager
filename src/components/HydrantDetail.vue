@@ -448,7 +448,6 @@ const handleDelete = async () => {
     const response = await hydrantApi.removeHydrant(props.hydrant.id)
 
     if (response.code === 10000) {
-      ElMessage.success('删除成功')
       emit('delete-success', props.hydrant.id)
       emit('refresh')
       emit('close')

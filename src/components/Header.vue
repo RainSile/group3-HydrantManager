@@ -451,7 +451,7 @@ const handleCurrentChange = (page) => {
 
 <style scoped>
 .app-header {
-  background: linear-gradient(135deg, #ff4d4f 0%, #cf1322 100%);
+  background: linear-gradient(135deg, #3498db 0%, #1a5276 100%);
   color: white;
   padding: 0 20px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);

@@ -84,7 +84,7 @@
       <!-- 最近消防栓结果 -->
       <div v-if="nearestHydrant" class="geo-result">
         <div class="result-header">
-          <span>最近消防栓</span>
+          <span>最近正常消防栓</span>
           <el-icon @click="clearNearestResult" class="clear-icon"><Close /></el-icon>
         </div>
         <div class="result-info">
@@ -120,7 +120,7 @@
       <!-- 半径搜索结果 -->
       <div v-if="radiusHydrants.length > 0" class="geo-result">
         <div class="result-header">
-          <span>半径内消防栓 ({{ radiusHydrants.length }}个)</span>
+          <span>半径内正常消防栓 ({{ radiusHydrants.length }}个)</span>
           <el-icon @click="clearRadiusResult" class="clear-icon"><Close /></el-icon>
         </div>
         <div class="radius-results">
@@ -185,7 +185,7 @@
           </div>
         </div>
         <div class="dialog-tip">
-          将在您当前位置 {{ searchRadius }} 千米范围内搜索消防栓
+          将在您当前位置 {{ searchRadius }} 千米范围内搜索可用消防栓
         </div>
       </div>
 

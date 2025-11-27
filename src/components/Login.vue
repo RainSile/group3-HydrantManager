@@ -132,7 +132,7 @@ const handleLogin = async () => {
       emit('login-success', userInfo)
 
     } else {
-      ElMessage.error(response.message || '登录失败')
+      ElMessage.error('登录失败,请检查用户名与密码')
     }
   } catch (error) {
     console.error('Login error:', error)
@@ -151,7 +151,7 @@ const emit = defineEmits(['login-success'])
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3498db 0%, #1a5276 100%);
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -260,9 +260,9 @@ const emit = defineEmits(['login-success'])
 }
 
 .input-wrapper:focus-within {
-  border-color: #667eea;
+  border-color: #3498db;
   background: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
 .input-icon {
@@ -300,7 +300,7 @@ const emit = defineEmits(['login-success'])
 }
 
 .password-toggle:hover {
-  color: #667eea;
+  color: #3498db;
 }
 
 .error-message {
@@ -312,7 +312,7 @@ const emit = defineEmits(['login-success'])
 
 .login-button {
   width: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3498db 0%, #1a5276 100%);
   color: white;
   border: none;
   padding: 15px;
@@ -327,7 +327,7 @@ const emit = defineEmits(['login-success'])
 
 .login-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
 }
 
 .login-button:active:not(:disabled) {

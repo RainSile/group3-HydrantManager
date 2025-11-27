@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Login v-if="!isLoggedIn" @login-success="handleLoginSuccess" />
+    <Login v-if="isLoggedIn" @login-success="handleLoginSuccess" />
     <div v-else class="main-app">
       <AppHeader :username="userInfo?.username" @logout="handleLogout" />
       <HydrantManagement />
@@ -31,8 +31,7 @@ const handleLogout = async () => {
     await logout()
     ElMessage.success('已退出登录')
   } catch (error) {
-    console.error('Logout error:', error)
-    ElMessage.error('退出登录失败')
+    ElMessage.success('已退出登录')
   } finally {
     localStorage.removeItem('token')
     localStorage.removeItem('userInfo')
