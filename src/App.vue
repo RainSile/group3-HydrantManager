@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Login v-if="isLoggedIn" @login-success="handleLoginSuccess" />
+    <Login v-if="!isLoggedIn" @login-success="handleLoginSuccess" />
     <div v-else class="main-app">
       <AppHeader :username="userInfo?.username" @logout="handleLogout" />
       <HydrantManagement />
