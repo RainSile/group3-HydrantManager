@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Area_1 {
+public class Area {
     /** 主键ID（雪花算法生成） */
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
