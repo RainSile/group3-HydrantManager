@@ -9,5 +9,5 @@ public class HydrantCommonApplication {
     public static void main(String[] args) {
         SpringApplication.run(HydrantCommonApplication.class, args);
     }
-
+    //test
 }
