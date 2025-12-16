@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @MapperScan("g3.hydrantmana.hydrantweb.mapper")
 @EnableConfigurationProperties(JwtProperties.class)
 public class HydrantWebApplication {
-
+    //feat:text
     public static void main(String[] args) {
         SpringApplication.run(HydrantWebApplication.class, args);
     }
