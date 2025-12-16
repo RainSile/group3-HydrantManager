@@ -1,3 +1,4 @@
+
 # G3 消防栓管理系统 (Java版)
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
@@ -291,6 +292,12 @@ java -jar hydrant-web/target/hydrant-web-1.0.0.jar
 3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 提交 Pull Request
+> 说明：本项目为课程期末小组作业，协作方式以小组内部沟通为主。
+- 提交前请确保代码能够正常运行，不影响已有功能
+- 建议提交信息简洁明了，说明本次修改的主要内容
+- 文档类修改（README、说明文档等）可直接提交
+- 非核心功能修改建议在独立分支中完成
+
 
 ### 开发规范
 
