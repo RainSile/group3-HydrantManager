@@ -45,21 +45,20 @@ public class HydrantServiceImpl implements HydrantService {
      */
     @Override
     public void addHydrant(HydrantDTO hydrantDTO) {
-        if (hydrantDTO.getStatus() != null) {
-            if (hydrantDTO.getStatus() == HydrantStatusConstants.NORMAL){
-                GeoDTO geoDTO = new GeoDTO();
-                geoDTO.setLatitude(hydrantDTO.getLatitude());
-                geoDTO.setLongitude(hydrantDTO.getLongitude());
-                geoDTO.setHid(hydrantDTO.getId());
-                geoInfoService.addGeoInfo(geoDTO);
-            }else{
-                geoInfoService.removeGeoInfo(hydrantDTO.getId());
-            }
-        }
+
         Hydrant hydrant = new Hydrant();
         BeanUtils.copyProperties(hydrantDTO,hydrant);
         hydrantMapper.insert(hydrant);
-        return;
+
+        if (hydrant.getStatus() == HydrantStatusConstants.NORMAL){
+            GeoDTO geoDTO = new GeoDTO();
+            geoDTO.setLatitude(hydrant.getLatitude());
+            geoDTO.setLongitude(hydrant.getLongitude());
+            geoDTO.setHid(hydrant.getId());
+            geoInfoService.addGeoInfo(geoDTO);
+        }else{
+            geoInfoService.removeGeoInfo(hydrantDTO.getId());
+        }
     }
 
     /**

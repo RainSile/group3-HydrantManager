@@ -24,17 +24,17 @@ G3消防栓管理系统是专为城市消防设施管理而设计的企业级应
 
 ### 技术栈
 
-| 技术 | 版本 | 说明 |
-|------|------|------|
-| Java | 17 | 核心开发语言 |
-| Spring Boot | 3.3.5 | 应用框架 |
-| MyBatis | 3.0.5 | ORM框架 |
-| MyBatis-Plus | 3.5.6 | MyBatis增强工具 |
-| MySQL | 8.3.0 | 关系型数据库 |
-| Druid | 1.2.23 | 数据库连接池 |
-| JWT | 0.11.5 | 无状态认证 |
-| Knife4j | 4.4.0 | API文档工具 |
-| Lombok | 1.18.32 | 代码简化工具 |
+| 技术         | 版本    | 说明            |
+| ------------ | ------- | --------------- |
+| Java         | 17      | 核心开发语言    |
+| Spring Boot  | 3.3.5   | 应用框架        |
+| MyBatis      | 3.0.5   | ORM框架         |
+| MyBatis-Plus | 3.5.6   | MyBatis增强工具 |
+| MySQL        | 8.3.0   | 关系型数据库    |
+| Druid        | 1.2.23  | 数据库连接池    |
+| JWT          | 0.11.5  | 无状态认证      |
+| Knife4j      | 4.4.0   | API文档工具     |
+| Lombok       | 1.18.32 | 代码简化工具    |
 
 ### 架构设计
 
@@ -78,12 +78,14 @@ g3-HydrantManager-java/
 ### 本地部署
 
 1. **克隆项目**
+
    ```bash
    git clone https://github.com/your-username/g3-HydrantManager-java.git
    cd g3-HydrantManager-java
    ```
 
 2. **数据库配置**
+
    ```sql
    -- 创建数据库
    CREATE DATABASE hydrant_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -118,6 +120,7 @@ g3-HydrantManager-java/
 3. **配置文件**
 
    修改 `hydrant-web/src/main/resources/application.yml`:
+
    ```yaml
    spring:
      datasource:
@@ -129,6 +132,7 @@ g3-HydrantManager-java/
    ```
 
 4. **构建运行**
+
    ```bash
    # 编译项目
    mvn clean compile
@@ -141,6 +145,7 @@ g3-HydrantManager-java/
    ```
 
 5. **访问应用**
+
    - 应用地址: http://localhost:8080
    - API文档: http://localhost:8080/doc.html
    - 健康检查: http://localhost:8080/actuator/health
@@ -150,23 +155,28 @@ g3-HydrantManager-java/
 系统集成了Swagger UI，提供完整的API文档：
 
 ### 认证接口
+
 - `POST /login` - 用户登录
 - `POST /logout` - 用户登出
 
 ### 用户管理
+
 - `GET /user/query` - 分页查询用户
 - `POST /user/add` - 添加用户
 - `PUT /user/status/{stat}` - 修改用户状态
 - `PUT /user/password` - 修改密码
 
 ### 消防栓管理
+
 - `GET /hydrant/query` - 分页查询消防栓
 - `POST /hydrant/add` - 新增消防栓
 - `PUT /hydrant/change` - 更新消防栓
 - `DELETE /hydrant/remove/{id}` - 删除消防栓
 
 ### 认证方式
+
 所有API接口（除登录外）都需要在请求头中携带JWT Token：
+
 ```
 Authorization: Bearer <your-jwt-token>
 ```
@@ -174,34 +184,37 @@ Authorization: Bearer <your-jwt-token>
 ## 🗄️ 数据库设计
 
 ### 用户表 (user_table)
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| id | BIGINT | 主键(雪花算法) |
-| username | VARCHAR(50) | 用户名(唯一) |
-| password | VARCHAR(255) | 密码(加密) |
-| phone | VARCHAR(20) | 联系电话 |
-| priv | TINYINT | 权限(0-普通,1-管理员) |
-| status | TINYINT | 状态(0-禁用,1-启用) |
-| create_time | TIMESTAMP | 创建时间 |
-| update_time | TIMESTAMP | 更新时间 |
+
+| 字段        | 类型         | 说明                  |
+| ----------- | ------------ | --------------------- |
+| id          | BIGINT       | 主键(雪花算法)        |
+| username    | VARCHAR(50)  | 用户名(唯一)          |
+| password    | VARCHAR(255) | 密码(加密)            |
+| phone       | VARCHAR(20)  | 联系电话              |
+| priv        | TINYINT      | 权限(0-普通,1-管理员) |
+| status      | TINYINT      | 状态(0-禁用,1-启用)   |
+| create_time | TIMESTAMP    | 创建时间              |
+| update_time | TIMESTAMP    | 更新时间              |
 
 ### 消防栓表 (hydrant_table)
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| id | BIGINT | 主键(雪花算法) |
-| location | VARCHAR(255) | 详细位置 |
-| longitude | DECIMAL(10,7) | 经度 |
-| latitude | DECIMAL(10,7) | 纬度 |
-| status | TINYINT | 状态(0-正常,1-维护,2-故障) |
-| pressure | DECIMAL(5,2) | 水压(MPa) |
-| flow_rate | DECIMAL(6,2) | 流速(L/S) |
-| create_time | TIMESTAMP | 创建时间 |
-| update_time | TIMESTAMP | 更新时间 |
-| data | TEXT | 备注信息 |
+
+| 字段        | 类型          | 说明                       |
+| ----------- | ------------- | -------------------------- |
+| id          | BIGINT        | 主键(雪花算法)             |
+| location    | VARCHAR(255)  | 详细位置                   |
+| longitude   | DECIMAL(10,7) | 经度                       |
+| latitude    | DECIMAL(10,7) | 纬度                       |
+| status      | TINYINT       | 状态(0-正常,1-维护,2-故障) |
+| pressure    | DECIMAL(5,2)  | 水压(MPa)                  |
+| flow_rate   | DECIMAL(6,2)  | 流速(L/S)                  |
+| create_time | TIMESTAMP     | 创建时间                   |
+| update_time | TIMESTAMP     | 更新时间                   |
+| data        | TEXT          | 备注信息                   |
 
 ## 🔧 开发指南
 
 ### 代码规范
+
 - 使用Lombok简化代码
 - 统一异常处理机制
 - RESTful API设计规范
@@ -209,6 +222,7 @@ Authorization: Bearer <your-jwt-token>
 - MyBatis-Plus代码生成
 
 ### 项目结构说明
+
 ```
 hydrant-common/
 ├── exceptions/           # 自定义异常类
@@ -232,6 +246,7 @@ hydrant-web/
 ```
 
 ### 构建部署
+
 ```bash
 # 打包
 mvn clean package -pl hydrant-web
@@ -255,12 +270,15 @@ java -jar hydrant-web/target/hydrant-web-1.0.0.jar
 ## 📊 监控与运维
 
 ### 健康检查
+
 - 应用健康状态: `/actuator/health`
 - 数据库连接状态: `/actuator/db`
 - 系统信息: `/actuator/info`
 
 ### Druid监控
+
 访问 `http://localhost:8080/druid` 查看:
+
 - 数据源监控
 - SQL监控
 - 慢查询分析
@@ -275,6 +293,7 @@ java -jar hydrant-web/target/hydrant-web-1.0.0.jar
 5. 提交 Pull Request
 
 ### 开发规范
+
 - 遵循阿里巴巴Java开发手册
 - 提交信息格式: `type: description`
 - 代码审查必须通过
@@ -283,6 +302,7 @@ java -jar hydrant-web/target/hydrant-web-1.0.0.jar
 ## 📝 更新日志
 
 ### v1.0.0 (2024-11-22)
+
 - ✨ 实现用户管理模块
 - ✨ 实现消防栓管理模块
 - ✨ 集成JWT认证机制

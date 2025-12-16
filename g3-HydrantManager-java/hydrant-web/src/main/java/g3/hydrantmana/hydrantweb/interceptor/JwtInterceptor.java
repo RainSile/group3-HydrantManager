@@ -77,6 +77,26 @@ public class JwtInterceptor implements HandlerInterceptor {
                         return false;
                     }
                 }
+
+                // maintenance模块
+                if (uri.startsWith("/maintenance")) {
+                    // 允许 /maintenance/query
+                    if (!(uri.startsWith("/maintenance/query"))) {
+                        log.warn("普通用户禁止访问: {}", uri);
+                        response.setStatus(401);
+                        return false;
+                    }
+                }
+
+                // maintenance-log
+                if (uri.startsWith("/log")) {
+                    // 允许 /log/query
+                    if (!(uri.startsWith("/log/query"))) {
+                        log.warn("普通用户禁止访问: {}", uri);
+                        response.setStatus(401);
+                        return false;
+                    }
+                }
             }
             return true;
         } catch (Exception ex) {

@@ -3,16 +3,16 @@ spring:
     name: hydrant-web
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://root:nmgfzxg8@dbconn.sealoshzh.site:42615/hydrant_db?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://root:z97kxr7d@dbconn.sealoshzh.site:49078/hydrant_db?serverTimezone=Asia/Shanghai
     username: root
-    password: nmgfzxg8
+    password: z97kxr7d
     type: com.alibaba.druid.pool.DruidDataSource
   data:
     redis:
       host: dbconn.sealoshzh.site
-      port: 37888
+      port: 42905
       username: default
-      password: kvkppsr2
+      password: vx4jp2sw
     lettuce:
       pool:
         max-active: 8
