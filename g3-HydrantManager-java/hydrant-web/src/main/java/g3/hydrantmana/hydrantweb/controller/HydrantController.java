@@ -11,11 +11,13 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
 @Tag(name = "消防栓管理")
 @RestController
 @RequestMapping("/hydrant")
 @Slf4j
+@RequestMapping("/responsibleUnit")
 public class HydrantController {
     @Resource
     HydrantService hydrantService;
@@ -23,6 +25,7 @@ public class HydrantController {
     @Operation(tags = "消防栓管理",summary = "查询消防栓(条件+分页)")
     @GetMapping("/query")
     public JsonVO<PageDTO<HydrantDTO>> listHydrant(@Validated HydrantQuery query){
+        log.info("查询消防栓责任单位信息"); // ✅ 新增日志
         PageDTO<HydrantDTO> pageDTO = hydrantService.listHydrant(query);
         return JsonVO.success(pageDTO);
     }
