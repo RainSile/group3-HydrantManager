@@ -31,7 +31,7 @@ public class HydrantQuery extends PageQuery implements Serializable {
     private Double maxFlowRate;
 
     @Schema(description = "按更新时间范围查询 - 起始时间", example = "2025-11-01 00:00:00")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
     private LocalDateTime startTime;
 
     @Schema(description = "按更新时间范围查询 - 结束时间", example = "2025-11-09 23:59:59")
