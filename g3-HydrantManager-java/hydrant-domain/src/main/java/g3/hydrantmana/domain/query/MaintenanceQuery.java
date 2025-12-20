@@ -11,6 +11,6 @@ public class MaintenanceQuery extends PageQuery implements Serializable {
     @Schema(description = "维修责任人id", example = "1757482000107992064")
     private String uid;
 
-    @Schema(description = "故障消防栓id", example = "1757481893034569728")
+    @Schema(description = "故障消防栓id", example = "1757481893034569728") 
     private String hid;
 }
