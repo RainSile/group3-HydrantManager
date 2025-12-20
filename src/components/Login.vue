@@ -4,7 +4,7 @@
       <div class="login-card">
         <div class="login-header">
           <div class="logo">
-            <div class="logo-icon">🔥</div>
+            <div class="logo-icon">🚒</div>
             <h1>消防栓查询系统</h1>
           </div>
           <p class="system-desc">Fire Hydrant Management System</p>
@@ -13,7 +13,7 @@
         <form class="login-form" @submit.prevent="handleLogin">
           <div class="form-group">
             <div class="input-wrapper">
-              <span class="input-icon">👤</span>
+              <span class="input-icon">👨‍🚒</span>
               <input
                   v-model="loginForm.username"
                   type="text"
@@ -42,7 +42,7 @@
                   class="password-toggle"
                   @click="showPassword = !showPassword"
               >
-                {{ showPassword ? '🙈' : '👁️' }}
+                {{ showPassword ? '🚫' : '👀' }}
               </button>
             </div>
             <div v-if="errors.password" class="error-message">{{ errors.password }}</div>
