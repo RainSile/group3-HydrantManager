@@ -43,7 +43,7 @@
           <!-- 纬度 - 必填，不能为0 -->
           <el-form-item label="纬度" prop="latitude">
             <el-input-number
-                v-model="formData.latitude"
+                v-model="formData.latitude" 
                 :precision="6"
                 :step="0.000001"
                 :min="-90"
