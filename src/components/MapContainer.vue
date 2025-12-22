@@ -216,7 +216,7 @@ const refreshMarkers = () => {
 defineExpose({
   refreshMarkers,
   gotoLocation,
-  clearUserLocationMarker
+  clearUserLocationMarker 
 })
 
 // 监听消防栓数据变化
@@ -250,6 +250,8 @@ watch(() => props.selectedHydrant, (newVal) => {
   position: relative;
   min-height: 600px;
 }
+
+
 
 .bmap {
   width: 100%;
