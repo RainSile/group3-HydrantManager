@@ -1,5 +1,7 @@
 package g3.hydrantmana.common.constants;
 
-public final class SystemConstants {
-    public static final int LOGICAL_DELETED = 1;
+public class SystemConstants {
+    public static final String DEFAULT_PASSWORD = "123456";
+    public static final int MAX_PAGE_SIZE = 50;
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 }
