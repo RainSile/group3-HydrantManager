@@ -257,6 +257,7 @@
       { value: statusCount['故障'], name: '故障', itemStyle: { color: '#ff4d4f' } }
     ].filter(item => item.value > 0)
     
+    
     return {
       tooltip: {
         trigger: 'item',
